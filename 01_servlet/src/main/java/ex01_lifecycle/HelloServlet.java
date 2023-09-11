@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  * 4. jsp/servlet container(톰캣)에 저장되기 때문에 동일한 이름의 서블릿을 2개 이상 만들 수 없다.
  *      톰캣이 없으면 서블릿은 추가를 해도 오류가 난다. 톰캣에 의해 실행이 된다.
  * 5. 응답을 만들어서 클라이언트에게 전송할 수 있다.
+ * 
+ * 요청과 응답을 모두 받아 처리하는 자바 클래스
  */
 
 
@@ -38,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
  *    
  */
 @WebServlet("/HelloServlet")
-public class HelloServlet extends HttpServlet {
+public class HelloServlet extends HttpServlet {     // 서블릿을 구현할 때 반드시 상속받아야 할 클래스 : HttpServlet(패키지는 javax.servlet.http)
 	private static final long serialVersionUID = 1L;
        
     /**

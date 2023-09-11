@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+  <div>
+    <form method="get" action="/servlet/response">      <!-- get : URL주소에 데이터를 붙여서 전송하는 방식 -->
+    <!-- 요청을 post로 바꾸면, doPost내에서 다시 doGet으로 전달되므로 추가로 할 일은 없다. 따라서 요청방식이 뭐든, 모든 작업은 doGet에서 하라. -->
+      <div>
+      <!-- radio는 서버에서 String[](배열)이 아닌 String으로 받는다. (1개만 선택되기 때문에) -->
+        <input type="radio" name="gender" value="man" id="man">
+        <label for="man">남자</label>
+        <input type="radio" name="gender" value="woman" id="woman">
+        <label for="woman">여자</label>
+        <input type="radio" name="gender" value="none" id="none" checked>
+        <label for="none">선택안함</label>
+      </div>
+      <div>
+        <input tpye="text" list="domain" name="domain">   <!-- 입력 + datalist이므로 input에 name을 줘야 함 name="domain"이 파라미터 -->
+        <datalist id="domain">
+          <option value="naver.com" />
+          <option value="kakao.com" />
+          <option value="gmail.com" />
+        </datalist>
+      </div>
+      <div>
+        <textarea rows="5" cols="50" name="content" placeholder="입력하시오."></textarea>
+      </div>
+      <div>
+        <!-- type="hidden" : <input> 태그를 hidden 속성으로 지정하면 화면에는 보이지 않지만 value에 이미 값이 저장되어 있다. (자주 사용됨)
+        프론트에서 백단으로 보내고 싶은 값들이 있을 때 사용한다. 사용자가 입력을 할 수 없기 때문에 name이랑 value를 다 가져야 한다. -->
+        <input type="hidden" name="region" value="seoul">
+        <button type="submit">전송하기</button>
+      </div>
+    </form>
+  </div>
+  
+</body>
+</html>

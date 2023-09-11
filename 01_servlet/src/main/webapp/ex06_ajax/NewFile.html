@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- XML 요청 -->
+  <div>
+    <div>
+      <input type="text" id="name" placeholder="이름">
+    </div>
+    <div>
+      <input type="text" id="age" placeholder="나이">
+    </div>
+    <div>
+      <button type="button" id="btn1">XML요청</button>
+    </div>
+    <div id="content1"></div>
+  </div>
+  <script>
+    $('#btn1').click(function(){
+      $.ajax({
+        /* 요청 */
+        type: 'get',
+        url: '/servlet/getXML',
+        // async: true,    // 비동기 통신의 async값 디폴트 : true이므로 생략 가능, 앞으로는 생략!
+        data: 'name=' + $('#name').val() + '&age=' + $('#age').val(),
+        
+        // dynamic web project에서 jar파일 가져와서 쓰는 방법 : 사용하고자 하는 라이브러리를 WEB-INF폴더의 lib폴더로 끌어옮겨 복사하기
+        // Web App Libraries - jar - org.json에서 XML.class 사용하려고 한다.
+        
+        /* 응답 */
+        dataType: 'xml',
+        success: function(resData){   // resData는 <person><name>alice</name><age>30</age></person> 형태이다.
+          
+          // jQuery로 만들기
+          //$('#content1').empty();     // 기존 정보는 지우고 새로 작업
+          //var ul = $('<ul>');
+          //ul.append($('<li>').text($(resData).find('name').text()));
+          //ul.append($('<li>').text($(resData).find('age').text()));
+          //$('#content1').append(ul);  // empty + append (제거 + 추가)
+          
+          // String으로 만들기
+          var ul = '<ul>';
+          ul += '<li>' + $(resData).find('name').text() + '</li>';
+          ul += '<li>' + $(resData).find('age').text() + '</li>';
+          $('#content1').html(ul);        // html (덮어쓰기. 제거 필요 X)
+        },
+        error: function(jqXHR){
+          alert(jqXHR.status + '(' + jqXHR.statusText + ')');
+        }
+      })
+    })
+    
+  </script>
+  
+  
+  <hr>
+  
+  
+  <!-- JSON 요청 : form 안에 -->
+  <div>
+    <form id="frm">
+      <div>
+        <input type="text" name="title" placeholder="제목">   <!-- 이 경우엔 id가 필요하지 않다. name은 꼭 있어야 한다. -->
+      </div>
+      <div>
+        <input type="text" name="writer" placeholder="내용">
+      </div>
+      <div>
+        <button type="button" id="btn2">JSON요청</button>
+      </div>
+    </form>
+    <div id="content2"></div>
+  </div>
+  <script>
+    $('#btn2').click(function(){
+      $.ajax({
+        /* 요청 */
+        type: 'get',
+        url: '/servlet/getJSON',
+        data: $('#frm').serialize(),    // <form> 태그의 모든 입력 요소들을 파라미터로 보낸다. 이 때 입력 요소들은 name 속성을 가지고 있어야 한다.(name속성이 파라미터로 사용됨)
+        // serialize() 메소드 : 직렬화. submit 처럼 데이터를 한 번에 보낼 수 있음
+        
+        /* 응답 */
+        dataType: 'json',
+        success: function(resData){   // resData는 {"writer":"관리자", "title":"공지사항"} 형태이다.
+          var str = '';
+          str += '<h4>' + resData.title + '</h4>';
+          str += '<h4>' + resData.writer + '</h4>';
+          $('#content2').html(str);
+        },
+        error: function(jqXHR){
+          alert(jqXHR.status + '(' + jqXHR.statusText + ')');
+        }
+        
+      })
+    })
+  </script>
+
+</body>
+</html>

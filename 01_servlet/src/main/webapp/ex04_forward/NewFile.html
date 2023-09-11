@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+  <!--
+       forward (직접 전달해서 이동)
+       고객센터에 전화했을 때, 여기가 아니라고 하고 고객센터가 직접 연결해줌
+          client.html -> Servlet1 -> forward -> Servlet2
+          
+  
+      
+       redirect (방향을 다시 잡아줌 / 다시 클라이언트한테 알려줘서 다시 보내는 방식)
+       고객센터에 전화했을 때, 여기가 아니라고 하고 전화번호를 알려줘서 직접 다시 걸어야 함
+          client.html -> Servlet1 -> redirect -> client.html -> Servlet2
+  -->
+
+  <!-- 
+  
+    NewFile.html -> Forward1.java -> Forward2.java
+  
+  
+  웹 브라우저 주소 창의 URL이 forward2가 아닌, forward1으로 보여진다.(클라이언트에게는 공개되지 않음) 이는 서블릿의 포워드가 서버에서 수행되었기 때문
+   -->
+
+
+<body>
+
+  <div>
+    <!-- 경유지 -->
+    <a href="/servlet/forward1?name=alice">포워드</a>  <!-- 환승할 공항 : forward1, 짐 : name=alice -->
+  </div>
+
+</body>
+</html>
