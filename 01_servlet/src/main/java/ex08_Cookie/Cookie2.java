@@ -56,6 +56,9 @@ public class Cookie2 extends HttpServlet {
 	  Cookie cookie = new Cookie("name", "값은아무의미가없다");
 	  cookie.setMaxAge(0);
 	  response.addCookie(cookie);
+	  
+	  // jsessionID : 브라우저 켤 때마다 session이 만들어지는데 자동으로 저장해두는 것임
+	  // 그 값을 알고있는 사람은 그 작업을 수행했던 사람이다. -> 자동 로그인 처리
 	}
 
 	/**
