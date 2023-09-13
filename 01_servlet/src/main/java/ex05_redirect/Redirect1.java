@@ -1,6 +1,8 @@
 package ex05_redirect;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,12 +35,17 @@ public class Redirect1 extends HttpServlet {
      * 2. 서버가 다른 경로를 응답하면(클라이언트에게 알려주면) 클라이언트가 해당 경로로 직접 이동하는 방식이다.
      * 3. 경로를 작성할 때 ContextPath와 URLMapping을 모두 작성한다.
      * 
-     * 첫 번째 redirect까지는 파라미터가 있으나, 두 번째 redirect에선 파라미터가 사라진다. 전달 X
+     * 아래 경로에 redirect2뒤에 파라미터 붙이지 않으면, 첫 번째 redirect까지는 파라미터가 있으나, 두 번째 redirect에선 파라미터가 사라진다. 전달 X
 	   */
 	  
-	  // redirect할 경로를 응답
-	  response.sendRedirect("/servlet/redirect2");
+	  // 요청 인코딩
+	  request.setCharacterEncoding("UTF-8");
 	  
+	  // 요청 파라미터
+	  String name = request.getParameter("name");
+	  
+	  // redirect할 경로를 응답
+	  response.sendRedirect("/servlet/redirect2?name=" + URLEncoder.encode(name, "UTF-8"));
 	  
 	}
 

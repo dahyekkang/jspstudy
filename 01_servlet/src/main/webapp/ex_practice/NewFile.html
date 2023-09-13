@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+  <div>
+    <form id="frm" method="get" action="/servlet/practice1">
+      <div>
+        <div>아이디</div>
+        <input type="text" name="id">@naver.com
+      </div>
+      <div>
+        <div>비밀번호</div>
+        <input type="password" name="pw">
+      </div>
+      <div>
+        <div>비밀번호재확인</div>
+        <input type="password" name="pw2">
+      </div>
+      <div>
+        <div>이름</div>
+        <input type="text" name="name">
+      </div>
+      <div>
+        <div>생년월일</div>
+        <input type="text" name="year" size=4 placeholder="년(4자)">
+        <select name="month">
+          <option value="" selected>월</option>
+          <option value="1" />
+          <option value="2" />
+          <option value="3" />
+          <option value="4" />
+          <option value="5" />
+          <option value="6" />
+          <option value="7" />
+          <option value="8" />
+          <option value="9" />
+          <option value="10" />
+          <option value="11" />
+          <option value="12" />
+        </select>
+        <input type="text" name="day" size=2 placeholder="일">
+      </div>
+      <div>
+        <div>성별</div>
+        <select name="gender">
+          <option value="" selected>성별</option>
+          <option value="male">남자</option>
+          <option value="female">여자</option>
+        </select>
+      </div>
+      <div>
+        <div>본인 확인 이메일(선택)</div>
+        <input type="text" name="email" placeholder="선택입력">
+      </div>
+      <div>
+        <div>휴대전화</div>
+        <select name="mobile1">
+          <option value="korea" selected>대한민국 +82</option>
+        </select>
+        <div>
+          <input type="text" name="mobile2" placeholder="전화번호 입력">
+          <button>인증번호 받기</button>
+        </div>
+        <div>
+          <input type="text" name="mobile3" readonly placeholder="인증번호 입력하세요">
+        </div>
+      </div>
+      <div>
+        <button type="submit">가입하기</button>
+      </div>
+    
+    </form>
+  </div>
+
+</body>
+</html>
