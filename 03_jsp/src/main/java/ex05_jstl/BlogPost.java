@@ -14,5 +14,4 @@ public class BlogPost {
   private String title;
   private int hit;
   private LocalDate createdAt;
-  
 }
