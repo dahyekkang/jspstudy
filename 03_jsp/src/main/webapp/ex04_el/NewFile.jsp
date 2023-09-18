@@ -55,7 +55,7 @@
     <div>${msg}</div>
     
     <%-- 각 영역의 속성 확인하기 --%>
-    <div>${pagsScope.msg}</div>
+    <div>${pageScope.msg}</div>
     <div>${requestScope.msg }</div>
     <div>${sessionScope.msg}</div>
     <div>${applicationScope.msg}</div>
