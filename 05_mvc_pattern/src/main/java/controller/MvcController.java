@@ -1,15 +1,15 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.GetDate;
-import service.GetTime;
 import service.MvcService;
+import service.MvcServiceImpl;
 
 /**
  * Servlet implementation class MvcController
@@ -37,20 +37,19 @@ public class MvcController extends HttpServlet {
 	  String contextPath = request.getContextPath();                     /*    /mvc              */
 	  String urlMapping = requestURI.substring(contextPath.length());    /*    /getDate.do       */
 	  
-	  MvcService mvcService = null;
+	  MvcService mvcService = new MvcServiceImpl();
+	  String path = null;
 	  
 	  switch(urlMapping) {
 	  case "/getDate.do":
-	    mvcService = new GetDate();
+	    path = mvcService.getDate(request);
 	    break;
 	  case "/getTime.do":
-	    mvcService = new GetTime();
+	    path = mvcService.getTime(request);
 	    break;
 	  }
 	  
-	  String path = mvcService.exec(request);
 	  request.getRequestDispatcher(path).forward(request, response);
-	  
 	  
 	}
 
