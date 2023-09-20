@@ -1,10 +1,14 @@
 package service;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
+import vo.UserVo;
 
 public class MvcServiceImpl implements MvcService {
 
@@ -18,6 +22,40 @@ public class MvcServiceImpl implements MvcService {
     request.setAttribute("age", nowYear - iYear);
     
     return new ActionForward("views/age.jsp", false); // views 폴더 내 age.jsp로 forward로 간다.
+  }
+  
+  @Override
+  public void getAbs(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    int n = Integer.parseInt(request.getParameter("n"));
+    
+    PrintWriter out = response.getWriter();
+    out.println("<script>");
+    out.println("alert('" + (n >= 0 ? n : -n) + "')");
+    out.println("location.href = '" + request.getContextPath() + "'");
+    out.println("</script>");
+    out.flush();
+    out.close();
+  }
+  
+  @Override
+  public ActionForward getInfo(HttpServletRequest request) {
+    
+    String name = request.getParameter("name");
+    int age = Integer.parseInt(request.getParameter("age"));
+    String gender = request.getParameter("gender");
+    String[] hobbies = request.getParameterValues("hobbies");   // 배열을 가지는 파라미터의 값 가져오기
+    
+    UserVo vo = new UserVo();
+    vo.setName(name);
+    vo.setAge(age);
+    vo.setGender(gender);
+    vo.setHobbies(hobbies);
+
+    request.setAttribute("vo", vo);
+    
+    return new ActionForward("views/info.jsp", false);
+
   }
 
 }
