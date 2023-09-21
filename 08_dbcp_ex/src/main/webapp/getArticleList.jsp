@@ -22,8 +22,8 @@
   })
 
   function fnDetail(){
-    $('.board').click(function(){
-      location.href = '${contextPath}/board/detail.do?board_no=' + $(this).find('.board_no').text();
+    $('.article').click(function(){
+      location.href = '${contextPath}/getArticleDetail.do?article_no=' + $(this).find('.article_no').text();
     })
   }
 
@@ -32,17 +32,24 @@
 <body>
 
   <div>
-    <a href="${contextPath}/board/write.do">작성하러가기</a>
+    <a href="${contextPath}/writeArticle.do">기사작성하러가기</a>
   </div>
   
   <hr>
   
+    <label for="check">전체선택</label>
+    <input type="checkbox" name="check">
+    
+    <hr>
+  
+  <hr>
+  
   <div>
-    <c:forEach items="${boardList}" var="board">
-      <div class="board">
-        <span class="board_no">${board.board_no}</span>
-        <span>${board.title}</span>
-        <span>${board.created_at}</span>
+    <c:forEach items="${articleList}" var="article">
+      <div class="article">
+        <span class="article_no">${article.article_no}</span>
+        <span>${article.title}</span>
+        <span>${article.created}</span>
       </div>
     </c:forEach>
   </div>
