@@ -16,9 +16,10 @@
       FROM (SELECT BOOK_NO, TITLE, AUTHOR, PRICE, PUBDATE, ROW_NUMBER() OVER(ORDER BY BOOK_NO DESC) AS RN
               FROM BOOK_T) A
      WHERE A.RN BETWEEN #{begin} AND #{end}
+     <!-- mybatis는 #{} -> ?로 보낸다! -->
   </select>
   
-  <select id="bookDetail" parameterType="int" resultType="domain.BookoDto">
+  <select id="bookDetail" parameterType="int" resultType="domain.BookDto">
      SELECT BOOK_NO, TITLE, AUTHOR, PRICE, PUBDATE
        FROM BOOK_T
       WHERE BOOK_NO = #{bookNo}

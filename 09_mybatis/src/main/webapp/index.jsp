@@ -12,7 +12,7 @@
 <body>
 
   <div>
-    <a href="${contextPath}/getArticleList.do">기사목록</a>
+    <a href="${contextPath}/book/list.do">도서목록</a>
   </div>
 
 </body>

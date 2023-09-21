@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,22 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
-import service.ArticleService;
-import service.ArticleServiceImpl;
+import service.BookService;
+import service.BookServiceImpl;
 
 /**
- * Servlet implementation class ArticleController
+ * Servlet implementation class BookController
  */
 @WebServlet("*.do")
-public class ArticleController extends HttpServlet {
+public class BookController extends HttpServlet {
   private static final long serialVersionUID = 1L;
   
-  private ArticleService articleService = new ArticleServiceImpl();
+  private BookService bookService = new BookServiceImpl();
   
   /**
    * @see HttpServlet#HttpServlet()
    */
-  public ArticleController() {
+  public BookController() {
     super();
     // TODO Auto-generated constructor stub
   }
@@ -33,35 +34,47 @@ public class ArticleController extends HttpServlet {
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    // BookFilter 실행 후 Controller 실행
+    
+    // 요청 인코딩(BookFilter가 수행함) + 응답 타입과 인코딩
+    // request.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
     
+    // 요청 주소 확인
     String requestURI = request.getRequestURI();
     String contextPath = request.getContextPath();
     String urlMapping = requestURI.substring(contextPath.length());
     
+    // 어디로 어떻게 이동할 것인지 알고 있는 ActionForward 객체
     ActionForward af = null;
     
+    // 요청에 따른 처리
     switch(urlMapping) {
+    // 단순 이동 (forward 처리)
+    case "/book/write.do":
+      af = new ActionForward("/book/write.jsp", false);
+      break;
     case "/index.do":
       af = new ActionForward("/index.jsp", false);
       break;
-    case "/writeArticle.do":
-      af = new ActionForward("/article/write.jsp", false);
+    // 서비스 처리
+    case "/book/add.do":
+      af = bookService.bookAdd(request);
       break;
-    case "/addArticle.do":
-      af = articleService.add(request);
+    case "/book/list.do":
+      af = bookService.bookList(request);
       break;
-    case "/getArticleList.do":
-      af = articleService.list(request);
+    case "/book/detail.do":
+      af = bookService.bookDetail(request);
       break;
-    case "/getArticleDetail.do":
-      af = articleService.detail(request);
+    case "/book/edit.do":
+      af = bookService.bookEdit(request);
       break;
-    case "/editArticle.do":
-      af = articleService.edit(request);
+    case "/book/modify.do":
+      af = bookService.bookModify(request);
       break;
-    case "/modifyArticle.do":
-      af = articleService.modify(request);
+    case "/book/delete.do":
+      af = bookService.bookDelete(request);
       break;
     }
     

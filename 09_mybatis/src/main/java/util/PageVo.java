@@ -50,9 +50,6 @@ public class PageVo {
   
   public String getPaging(String url) {
     
-    // <a href="https://comic.naver.com/webtoon/list?page=1">1</a>
-    // <a href="https://comic.naver.com/webtoon/list?page=2">2</a>
-     
     StringBuilder sb = new StringBuilder();
     
     sb.append("<div>");
