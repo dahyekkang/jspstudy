@@ -1,0 +1,9 @@
+학번 readonly
+평균, 학점 -> disabled 보낼 필요 X
+
+상세조회, edit화면 합침 (detail)
+
+list화면 top3목록, 전체학생, 목록, 전체평균
+
+조회결과에선 top3가져올 필요 없음
+
