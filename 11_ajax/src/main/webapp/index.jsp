@@ -13,6 +13,7 @@
   $(function(){
     fnMemberList();
     fnInit();
+    fnMemberDetail();
     fnMemberAdd();
     fnEmailCheck();
     fnMemberDetail();
@@ -44,6 +45,7 @@
             str += '<td>' + (elem.gender === 'man' ? '남자' : (elem.gender === 'woman' ? '여자' : '선택안함')) + '</td>';
             str += '<td>' + elem.address + '</td>';
             str += '<td><button class="btn_detail" data-email="' + elem.email + '">조회</button></td>';
+            console.log("${contextPath}/member");
             str += '</tr>';
             memberList.append(str);
           })
@@ -65,6 +67,11 @@
     $('#none').prop('checked', true);
     $('#address').val('');
     $('#msg_email').text('');
+    ////    입력초기화를 클릭하면 신규등록버튼 활성화      ////
+    //                            수정,삭제버튼 비활성화     //
+    $('#btn_add').prop('disabled', false);
+    $('#btn_modify').prop('disabled', true);
+    $('#btn_delete').prop('disabled', true);
   }
   
   function fnMemberAdd(){
@@ -95,6 +102,8 @@
   
   var ableEmail = false;
   
+  var myEmail = '';
+  
   function fnEmailCheck(){
     $('#email').keyup(function(){
       $.ajax({
@@ -104,7 +113,8 @@
         dataType: 'text',
         success: function(resData){         // resData === '{"ableEmail":true}'
           var obj = JSON.parse(resData);    //     obj === {"ableEmail":true}
-          ableEmail = obj.ableEmail;
+          // myEmail === $('#email').val() 조건은 입력된 이메일이 원래 자신의 email과 같음을 의미한다.
+          ableEmail = (obj.ableEmail) || (myEmail === $('#email').val());
           if(ableEmail){
             $('#msg_email').text('');
           } else {
@@ -118,7 +128,7 @@
   function fnMemberDetail(){
     /*
     $('.btn_detail').click(function(){
-      alert('shit');    // 동작하지 않음! 어떤 이벤트로 인해서 만들어진 아이들은.... 
+      alert('shit');    // 동작하지 않음! 어떤 이벤트로 인해서 만들어진 이벤트는 .click으로 이벤트 X
     })
     */
     
@@ -130,11 +140,20 @@
         dataType: 'text',
         success: function(resData){              // resData === '{"member":{"memberNo":1,...}}'
           var obj = JSON.parse(resData);         //     obj === {"member":{"memberNo":1,...}}
+          // 상세보기하면 해당 회원의 email이 myEmail에 저장된다.
+          myEmail = obj.member.email;
           $('#email').val(obj.member.email);
           $('#name').val(obj.member.name);
           $(':radio[name=gender][value=' + obj.member.gender + ']').prop('checked', true);
           $('#address').val(obj.member.address);
           $('#memberNo').val(obj.member.memberNo);
+          //// 조회를 클릭하면 신규등록버튼 비활성화  ////
+          //                      수정,삭제버튼 활성화  //
+          $('#btn_add').prop('disabled', true);
+          $('#btn_modify').prop('disabled', false);
+          $('#btn_delete').prop('disabled', false);
+          // ableEmail 상태 갱신을 위해 email의 keyup 이벤트 강제 실행 ////
+          $('#email').trigger('keyup');
         }
       })
     })
@@ -142,6 +161,12 @@
   
   function fnMemberModify(){
     $('#btn_modify').click(function(){
+      // 다른 사람이 쓰는 이메일로 수정 불가능
+      if(!ableEmail){
+        alert('등록할 수 없는 이메일입니다.');
+        $('#email').focus();
+        return;
+      }
       $.ajax({
         type: 'post',   // 삽입이랑 수정은 post로!
         url: '${contextPath}/member/modify.do',
