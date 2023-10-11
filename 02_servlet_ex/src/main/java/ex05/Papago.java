@@ -55,7 +55,7 @@ public class Papago extends HttpServlet {
       String source = request.getParameter("source");
       String target = request.getParameter("target");
       String text = request.getParameter("text");
-      String params = "source=" + source + "&target=" + target+"&text=" + text;
+      String params = "source=" + source + "&target=" + target + "&text=" + text;
       
       // URL 객체 생성과 접속 생성
       url = new URL(spec);
